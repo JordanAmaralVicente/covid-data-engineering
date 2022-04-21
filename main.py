@@ -17,6 +17,25 @@ def docker_start_options() -> None:
         run_docker('docker/docker-compose.yml')
 
 
+def stop_docker() -> None:
+    os.system('docker-compose -f docker/docker-compose-full.yml stop')
+
+def print_help() -> None:
+    print('Management of the project')
+    
+    print(
+    '''
+    USAGE:
+        python3.10 main.py [COMMAND]
+
+    COMMANDS:
+        --help: Show this message
+        --start: Start Docker containers
+        --stop: Stop Docker containers
+    '''
+    )
+
+
 def main():
     try:
         arg = sys.argv[1]
@@ -25,3 +44,7 @@ def main():
     
     if arg == '--start':
         docker_start_options()
+    elif arg == '--stop':
+        stop_docker()
+    else:
+        print_help()
