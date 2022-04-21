@@ -28,3 +28,5 @@ FIELDS TERMINATED BY ';'
 STORED AS TEXTFILE 
 LOCATION '/user/root/data/'
 tblproperties('skip.header.line.count'='1');
+
+DESC e_casos_covid;
