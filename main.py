@@ -52,6 +52,7 @@ def main():
         arg = sys.argv[1]
     except:
         print_help()
+        exit()
     
     if arg == '--start':
         docker_start_options()
