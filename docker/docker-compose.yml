@@ -1,0 +1,111 @@
+version: '3' 
+services:
+  namenode:
+    image: fjardim/namenode_sqoop
+    container_name: namenode
+    hostname: namenode
+    volumes:
+      - ./data/hdfs/namenode:/hadoop/dfs/name
+      - ./input:/input
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./data/hadoop/hadoop-hive.env
+    ports:
+      - "50070:50070"
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  
+  datanode:
+    image: fjardim/datanode
+    container_name: datanode
+    hostname: datanode
+    volumes:
+      - ./data/hdfs/datanode:/hadoop/dfs/data
+      #- ./data/hadoop/bank:/bank
+    env_file:
+      - ./data/hadoop/hadoop-hive.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070"
+    depends_on:
+      - namenode
+    ports:
+      - "50075:50075"
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  
+  hive-server:
+    image: fjardim/hive
+    container_name: hive-server
+    hostname: hive_server
+    env_file:
+      - ./data/hadoop/hadoop-hive.env
+    environment:
+      HIVE_CORE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore/metastore"
+      SERVICE_PRECONDITION: "hive-metastore:9083"
+    ports:
+      - "10000:10000"
+    depends_on:
+      - hive-metastore
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  
+  hive-metastore:
+    image: fjardim/hive
+    container_name: hive_metastore
+    hostname: hive_metastore
+    env_file:
+      - ./data/hadoop/hadoop-hive.env
+    command: /opt/hive/bin/hive --service metastore
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070 datanode:50075 hive-metastore-postgresql:5432"
+    ports:
+      - "9083:9083"
+    depends_on:
+      - hive-metastore-postgresql
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+  
+  hive-metastore-postgresql:
+    image: fjardim/hive-metastore
+    container_name: hive-metastore-postgresql
+    hostname: hive_metastore_postgresql
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+    depends_on:
+      - datanode
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+
+  jupyter-spark:
+    image: fjardim/jupyter-spark
+    hostname: jupyter-spark
+    container_name: jupyter-spark
+    command: notebook
+    env_file:
+      - ./data/jupyter/jupyter.env
+    ports:
+      - 8889:8889
+      - 4040:4040
+      - 4041:4041
+      - 4042:4042
+      - 4043:4043
+    volumes:
+       - ./data/notebooks:/mnt/notebooks/
+    environment:
+       SPARK_MASTER: local[*]
+       JUPYTER_PORT: 8889
+    deploy:
+      resources:
+        limits:
+          memory: 2gb
