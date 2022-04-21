@@ -36,7 +36,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500m
+          memory: 1g
   
   hive-server:
     image: fjardim/hive
@@ -54,7 +54,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500m
+          memory: 1g
   
   hive-metastore:
     image: fjardim/hive
@@ -72,7 +72,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500m
+          memory: 1g
   
   hive-metastore-postgresql:
     image: fjardim/hive-metastore
@@ -85,7 +85,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500m
+          memory: 1g
 
   jupyter-spark:
     image: fjardim/jupyter-spark
@@ -108,4 +108,4 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2gb
+          memory: 500m
