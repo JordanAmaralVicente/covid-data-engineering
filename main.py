@@ -9,7 +9,7 @@ def run_docker(docker_file: str) -> None:
 def docker_start_options() -> None:
     print('Choose a docker mode:\nFULL - Run all containers including elastic and kafka\nPARCIAL (default) - Run Hadoop and Jupyter-Spark')
 
-    docker_mode == input(':').upper()
+    docker_mode = input(':').upper()
 
     if docker_mode == 'FULL':
         run_docker('docker/docker-compose-full.yml')
