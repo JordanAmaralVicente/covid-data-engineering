@@ -14,4 +14,4 @@ docker exec namenode hdfs dfs -chmod 777 /user/root/data
 docker exec namenode hdfs dfs -chmod 777 /user/root/data/*.csv
 
 echo "\n${BLUE}HDFS output from list the /user/root/data folder${NC}:";
-docker exec namenode hdfs dfs -ls /user/root/data
+docker exec namenode hdfs dfs -ls -h /user/root/data
