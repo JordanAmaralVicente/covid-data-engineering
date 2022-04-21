@@ -1,0 +1,4 @@
+cluster.name: my_cluster
+node.name: node1
+network.host: _site_
+cluster.initial_master_nodes: ["node1"]
