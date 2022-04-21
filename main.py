@@ -20,6 +20,15 @@ def docker_start_options() -> None:
 def stop_docker() -> None:
     os.system('docker-compose -f docker/docker-compose-full.yml stop')
 
+
+def hdfs_setup() -> None:
+     os.system('./scripts/setup.sh')
+
+
+def hdfs_repair() -> None:
+    os.system('./scripts/repair.sh')
+
+
 def print_help() -> None:
     print('Management of the project')
     
@@ -32,6 +41,8 @@ def print_help() -> None:
         --help: Show this message
         --start: Start Docker containers
         --stop: Stop Docker containers
+        --setup: Configure and upload files to HDFS -> after cluster is running
+        --repair: Repair data in HDFS
     '''
     )
 
@@ -40,11 +51,19 @@ def main():
     try:
         arg = sys.argv[1]
     except:
-        print('insira uma opcao')
+        print_help()
     
     if arg == '--start':
         docker_start_options()
     elif arg == '--stop':
         stop_docker()
+    elif arg == '--setup':
+        hdfs_setup()
+    elif arg == '--repair':
+        hdfs_repair()
     else:
         print_help()
+
+
+if __name__ == '__main__':
+    main()
