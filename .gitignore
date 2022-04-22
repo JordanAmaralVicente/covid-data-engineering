@@ -1,2 +1,3 @@
 docker/data/
 data/casos_covid_opt.csv
+docker/input

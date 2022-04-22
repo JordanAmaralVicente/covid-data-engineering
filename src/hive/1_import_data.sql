@@ -18,8 +18,8 @@ CREATE EXTERNAL TABLE IF NOT EXISTS e_casos_covid(
     casos_novos INT,
     obitos_acumulado INT,
     obitos_novos INT,
-    recuperados_novos INT,
-    acompanhamento_novos INT,
+    recuperados_novos STRING,
+    acompanhamento_novos STRING,
     interior_metropolitana INT
 )
 COMMENT 'External Table With Covid Numbers'
