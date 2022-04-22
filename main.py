@@ -25,7 +25,7 @@ def stop_docker() -> None:
 
 
 def build_docker(args: str) -> None:
-    os.system(f'docker-compose -f {DOCKER_PATH}/docker-compose-full up -d --build {args}')
+    os.system(f'docker-compose -f {DOCKER_PATH}/docker-compose-full.yml up -d --build {args}')
 
 
 def hdfs_setup() -> None:
