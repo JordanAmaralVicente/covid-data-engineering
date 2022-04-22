@@ -1,9 +1,12 @@
 import sys
 import os
 
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+DOCKER_PATH = os.path.join('docker')
+SCRIPTS_PATH = os.path.join('scripts')
 
 def run_docker(docker_file: str) -> None:
-    os.system(f'docker-compose -f {docker_file} up -d')
+    os.system(f'docker-compose -f {DOCKER_PATH}/{docker_file} up -d')
 
 
 def docker_start_options() -> None:
@@ -12,21 +15,25 @@ def docker_start_options() -> None:
     docker_mode = input(':').upper()
 
     if docker_mode == 'FULL':
-        run_docker('docker/docker-compose-full.yml')
+        run_docker('docker-compose-full.yml')
     else:
-        run_docker('docker/docker-compose.yml')
+        run_docker('docker-compose.yml')
 
 
 def stop_docker() -> None:
-    os.system('docker-compose -f docker/docker-compose-full.yml stop')
+    os.system(f'docker-compose -f {DOCKER_PATH}/docker-compose-full.yml stop')
+
+
+def build_docker(args: str) -> None:
+    os.system(f'docker-compose -f {DOCKER_PATH}/docker-compose-full up -d --build {args}')
 
 
 def hdfs_setup() -> None:
-     os.system('./scripts/setup.sh')
+    os.system(f'{SCRIPTS_PATH}/setup.sh')
 
 
 def hdfs_repair() -> None:
-    os.system('./scripts/repair.sh')
+    os.system(f'{SCRIPTS_PATH}/repair.sh')
 
 
 def print_help() -> None:
@@ -35,7 +42,7 @@ def print_help() -> None:
     print(
     '''
     USAGE:
-        python3.10 main.py [COMMAND]
+        python3.10 main.py [COMMAND] [OPTIONS]
 
     COMMANDS:
         --help: Show this message
@@ -43,6 +50,10 @@ def print_help() -> None:
         --stop: Stop Docker containers
         --setup: Configure and upload files to HDFS -> after cluster is running
         --repair: Repair data in HDFS
+        --build: Start the specifieds docker containers
+
+    EXAMPLE:
+        python3.10 main.py --build jupyter-spark elasticsearch kibana logstash
     '''
     )
 
@@ -62,6 +73,9 @@ def main():
         hdfs_setup()
     elif arg == '--repair':
         hdfs_repair()
+    elif arg == '--build':
+        build_args = ' '.join(sys.argv[2:])
+        build_docker(build_args)
     else:
         print_help()
 
