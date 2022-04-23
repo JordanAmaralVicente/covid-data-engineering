@@ -102,6 +102,7 @@ services:
       - 4043:4043
     volumes:
        - ./data/notebooks:/mnt/notebooks/
+       - ./input:/input
     environment:
        SPARK_MASTER: local[*]
        JUPYTER_PORT: 8889

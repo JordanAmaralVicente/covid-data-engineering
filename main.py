@@ -1,9 +1,11 @@
 import sys
 import os
 
+
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCKER_PATH = os.path.join('docker')
 SCRIPTS_PATH = os.path.join('scripts')
+
 
 def run_docker(docker_file: str) -> None:
     os.system(f'docker-compose -f {DOCKER_PATH}/{docker_file} up -d')
