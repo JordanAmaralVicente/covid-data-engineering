@@ -79,6 +79,36 @@ Minha vontade principal era usar o spark-submit, porém no final das contas foi 
 Sendo assim, o projeto foi concluído como proposto, porém há pontos de melhora que desejo atualizar:
 - fazer um spark-application que execute toda parte de processamento de ponta-a-ponta usando todas bibliotecas necessárias e integrando com os serviços que atualmente estão rodando em cloud.
 
+## Estrutura do Projeto
+
+```
+covid_analysis
+|   README.md
+|   main.py
+|   projeto_fina_spark.pdf
+|   .gitignore
++---src
+|   +---hive
+|   |   +---database
+|   |   |   |   1_import_data.sql
+|   |   |   |   2_optimize_data.sql
+|   |   |   |   3_separated_data.sql
+|   +---spark
+|   |   +---notebooks
+|   |   |   |   covid_analysis.ipynb
++---scripts
+|   |   repair.sh
+|   |   setup.sh
++---docker
+|   |   docker-compose-full.yml
+|   |   docker-compose.yml
+|   +---data
+|   |   +--- pastas de configurações e dados dos containers
+|   +---input
+|   |   +--- pasta de volumes do docker para compartilhar dados com os containers
++---data
+|   |   arquivos .csv com os dados necessários
+```
 ## Como Rodar o Projeto ?
 Para rodar esse projeto há dois pré-requisitos principais:
 - Docker e Docker-compose instalados -> Instalação [Install Docker Engine](https://docs.docker.com/engine/install/)
