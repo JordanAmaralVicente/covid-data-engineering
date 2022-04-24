@@ -1,5 +1,4 @@
-# Covid Analysis
-
+# Covid Data Engineering Project
 O seguinte Repositório trata-se de um projeto de engenheria de dados incentivado pelo [Semantix](https://www.semantix.ai/) como parte opcional do curso [Big Data Engineer](https://www.semantix.ai/academy). A estrutura dela está definida na seguinte imagem:
 
 <img width="2608" alt="strucuture" src="https://user-images.githubusercontent.com/42154494/164946866-a612778a-59c8-4512-98ca-ba506a8364d6.png">
